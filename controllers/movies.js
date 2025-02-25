@@ -4,6 +4,7 @@ const Movie = require('../models/movies');
 const movieGet = async(req = request, res= response) => {
     try {
         const queryParam = { state: true }
+        const { limit = 1500 } = req.query
         const numeroEntradas = await Movie.countDocuments()
         const movie = await Movie.find(queryParam).limit(Number(limit))
     res.status(200).json({total: numeroEntradas, movie})
