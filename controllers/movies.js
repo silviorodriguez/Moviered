@@ -14,6 +14,21 @@ const movieGet = async(req = request, res= response) => {
     
 }
 
+const movieGetById = async(req = request, res = response) => {
+    try {
+        const { id } = req.params;
+        const movie = await Movie.findById(id);
+
+        if (!movie) {
+            return res.status(404).json({ msg: 'Película no encontrada' })
+        }
+
+        res.status(200).json(movie);
+    } catch (error) {
+        res.status(500).json({ msg: 'Error al obtener la película', error })
+    }
+}
+
 const moviePost = async(req = request, res= response) => {
     try {
         const { name, year, runtime, categories, release_date, director, writer, actors, storyline, state, image } = req.body
@@ -76,5 +91,6 @@ module.exports = {
     movieGet,
     moviePost,
     moviePut,
-    movieDel
+    movieDel,
+    movieGetById
 }
